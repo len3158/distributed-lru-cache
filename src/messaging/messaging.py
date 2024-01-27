@@ -13,12 +13,32 @@ class Messaging:
         :param cache_instance: The instance of the GeoDistributedLRUCache.
         :param host: The host of the RabbitMQ server.
         """
-        self.channel = None
-        self.connection = None
-        self.connection_params = None
-        self.cache_instance = cache_instance
         self.host = host
+        self.connection_params = pika.ConnectionParameters(self.host)
+        self.connection = pika.BlockingConnection(self.connection_params)
+        self.channel = self.connection.channel()
+        self.cache_instance = cache_instance
+        self.setup_queues()
         self.setup_messaging()
+
+    def setup_queues(self):
+        for region in self.cache_instance.regions:
+            self.channel.queue_declare(queue=region)
+
+    def start_consumer_thread(self):
+        for region in self.cache_instance.regions:
+            thread = threading.Thread(target=self.consume_messages, args=(region,))
+            thread.daemon = True
+            thread.start()
+
+    def consume_messages(self, region):
+        channel = self.connection.channel()  # Create a new channel for this thread
+        channel.basic_consume(queue=region, on_message_callback=self.on_message, auto_ack=True)
+        try:
+            channel.start_consuming()
+        finally:
+            channel.close()
+            self.connection.close()
 
     def setup_messaging(self):
         """
