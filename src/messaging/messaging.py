@@ -1,8 +1,7 @@
+import logging
+import threading
 import pika
 from pika import exceptions
-import json
-import threading
-import logging
 
 
 class Messaging:
@@ -36,6 +35,8 @@ class Messaging:
         channel.basic_consume(queue=region, on_message_callback=self.on_message, auto_ack=True)
         try:
             channel.start_consuming()
+        except exceptions as e:
+            print(e)
         finally:
             channel.close()
             self.connection.close()
@@ -91,9 +92,7 @@ class Messaging:
         """
         Callback function for handling incoming messages.
 
-        :param ch: The channel.
         :param method: The method frame.
-        :param properties: Properties.
         :param body: The message body.
         """
         self.cache_instance.update_cache(body, method.routing_key)
