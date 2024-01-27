@@ -1,4 +1,5 @@
 import pika
+from pika import exceptions
 import json
 import threading
 import logging
@@ -36,7 +37,7 @@ class Messaging:
 
     def setup_region_queue(self, region):
         """
-        Setup a queue for a specific region.
+        Set up a queue for a specific region.
 
         :param region: The name of the region.
         """
