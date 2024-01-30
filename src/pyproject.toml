@@ -1,0 +1,17 @@
+[project]
+name = "geo_distributed_LRU_cache_len3158"
+version = "0.0.1"
+authors = [
+  { name="Lenny Siemeni", email="len3158@gmail.com" },
+]
+description = "A Geo distributed LRU cache"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/len3158/distributed-lru-cache"
