@@ -59,7 +59,7 @@ RabbitMQ Server
 Clone the repository:
 
 ``
-git clone https://github.com/yourusername/geo-distributed-lru-cache.git
+git clone https://github.com/len3158/distributed-lru-cache
 ``
 
 Navigate to the project directory:
