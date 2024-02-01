@@ -3,6 +3,12 @@ from ..messaging import Messaging, CircuitBreaker
 from threading import Lock
 import json
 
+"""
+This class is responsible for managing the cache for each region.
+It sets up locks for thread safety, a circuit breaker for handling transient failures, 
+and the messaging system for cross-region replication.
+"""
+
 
 class GeoDistributedLRUCache:
     def __init__(self, regions, capacity=5, expiration_time=300):

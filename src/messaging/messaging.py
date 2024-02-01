@@ -3,6 +3,10 @@ import threading
 import pika
 from pika import exceptions
 
+"""
+This class is responsible for handling the messaging and replication logic across different cache regions using RabbitMQ
+"""
+
 
 class Messaging:
     def __init__(self, cache_instance, host='localhost'):
@@ -20,11 +24,24 @@ class Messaging:
         self.setup_queues()
         self.setup_messaging()
 
+    """ 
+    Encountered a common issue where pika throws a pika.exceptions.ReentrancyError where pika's BlockingConnection does 
+    not allow to start_consuming() from within the same thread that's handling another BlockingConnection or 
+    BlockingChannel callback.
+    """
+
     def setup_queues(self):
+        """
+        Declares the queues without starting to consume messages
+        """
         for region in self.cache_instance.regions:
             self.channel.queue_declare(queue=region)
 
     def start_consumer_thread(self):
+        """
+        Initializes a separate thread for each region to consume messages, with Each thread creating its own channel to
+        avoid reentrancy issues
+        """
         for region in self.cache_instance.regions:
             thread = threading.Thread(target=self.consume_messages, args=(region,))
             thread.daemon = True
@@ -107,7 +124,7 @@ class Messaging:
         try:
             for reg in self.cache_instance.regions:
                 if reg != region:
-                    self.channel.basic_publish(exchange='', routing_key=reg, body=message)
+                    self.channel.basic_publish(exchange='test', routing_key=reg, body=message)
         except pika.exceptions.AMQPConnectionError as e:
             logging.error("Failed to publish message: %s", e)
             # Handle publishing error here, possibly retry

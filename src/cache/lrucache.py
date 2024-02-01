@@ -3,13 +3,16 @@ from ..utils import CACHE_CAPACITY, CACHE_EXPIRATION_TIME, CACHE_ELEMENT_TTL
 
 import time
 
+"""This file contains the LRUCache class, implementing a basic LRU (Least Recently Used) cache with expiration 
+functionality."""
+
 
 class LRUCache:
     def __init__(self, capacity=CACHE_CAPACITY, expiration_time=CACHE_EXPIRATION_TIME):
         """
         Initialize an LRU Cache.
 
-        :param capacity: Maximum number of items the cache can hold.
+        :param capacity: The Maximum number of items the cache can hold.
         :param expiration_time: Time in seconds after which an item expires.
         """
         self.cache = OrderedDict()

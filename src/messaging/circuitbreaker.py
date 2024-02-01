@@ -1,6 +1,11 @@
 import time
 from ..utils.config import CIRCUIT_BREAKER_MAX_FAILURES, CIRCUIT_BREAKER_RESET_TIME
 
+"""
+This file contains the CircuitBreaker, which goal is to prevent the system from executing operations that are
+likely to fail.
+"""
+
 
 class CircuitBreaker:
     def __init__(self, max_failures=CIRCUIT_BREAKER_MAX_FAILURES, reset_time=CIRCUIT_BREAKER_RESET_TIME):

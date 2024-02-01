@@ -8,9 +8,9 @@ the closest region to reduce latency.
 
 ## Features
 Geo-Distributed Caching: Cache data is replicated across multiple geographic locations to ensure fast access times and high availability.
-LRU Eviction: Utilizes a Least Recently Used (LRU) policy for cache eviction, ensuring the most frequently accessed data is always available.
+LRU Eviction: Utilizes the Least Recently Used (LRU) policy for cache eviction, ensuring the most frequently accessed data is always available.
 Time Expiration: Cache entries have a configurable time-to-live (TTL), after which they are automatically invalidated.
-Resilience to Network Failures: Designed with robust error handling to gracefully handle network interruptions and maintain data consistency.
+Resilience to Network Failures: Designed with error handling to gracefully handle network interruptions and maintain data consistency.
 Flexible Schema: Supports caching of diverse data types with a flexible schema.
 Real-Time Replication: Ensures near real-time replication of data across all geographical locations to maintain consistency.
 
@@ -41,9 +41,13 @@ tests/
 ````
 
 **cache/**: Contains the core caching logic, including the geo-distributed cache and LRU cache implementations.
+
 **exceptions/**: Custom exception classes used throughout the project.
+
 **messaging/**: Components responsible for handling inter-service communication and data replication.
+
 **utils/**: Utility functions and common configurations.
+
 **tests/**: Unit and integration tests for the project components.
 
 ## Getting Started
